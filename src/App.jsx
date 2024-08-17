@@ -1,5 +1,6 @@
 import React from "react";
 import Weather from "./components/Weather";
+import Input from "./components/Input";
 
 function convertToFlag(countryCode) {
     const codePoints = countryCode
@@ -10,16 +11,17 @@ function convertToFlag(countryCode) {
 }
 
 class App extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            location: "Kolkata",
-            isLoading: false,
-            displayLocation: "",
-            weather: {}
-        };
+    state = {
+        location: "Kolkata",
+        isLoading: false,
+        displayLocation: "",
+        weather: {}
+    };
+    constructor(props) {
+        super(props);
 
         this.fetchWeather = this.fetchWeather.bind(this);
+        this.handleSetLocation = this.handleSetLocation.bind(this);
     };
 
     async fetchWeather(e) {
@@ -32,12 +34,10 @@ class App extends React.Component {
                 `https://geocoding-api.open-meteo.com/v1/search?name=${this.state.location}`
             );
             const geoData = await geoRes.json();
-            console.log(geoData);
 
             if (!geoData.results) throw new Error("Location not found");
 
-            const { latitude, longitude, timezone, name, country_code } =
-                geoData.results.at(0);
+            const { latitude, longitude, timezone, name, country_code } = geoData.results.at(0);
             this.setState({ displayLocation: `${name} ${convertToFlag(country_code)}` });
 
             // 2) Getting actual weather
@@ -55,15 +55,17 @@ class App extends React.Component {
 
     }
 
+    handleSetLocation(e) {
+        this.setState({ location: e.target.value })
+    };
+
     render() {
         return (
             <div className="app">
                 <h1>Classy Weather</h1>
 
                 <form action="" id="search-weather">
-                    <label htmlFor="search-input"></label>
-                    <input type="text" id="search-input" placeholder="search with location..." value={this.state.location} onChange={e => this.setState({ location: e.target.value }
-                    )} />
+                    <Input location={this.state.location} onChange={this.handleSetLocation} />
 
                     <button onClick={this.fetchWeather}>Get Weather</button>
                 </form>

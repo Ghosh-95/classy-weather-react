@@ -54,7 +54,7 @@ class Day extends React.Component {
             <li className="day">
                 <span>{this.getWeatherIcon(code)}</span>
                 <p>{isToday ? "Today" : this.formatDay(date)}</p>
-                <p>{Math.floor(min)} &deg; &mdash; {Math.ceil(max)}</p>
+                <p>{Math.floor(min)} &deg; &mdash; {Math.ceil(max)}&deg;</p>
             </li>
         )
     }
