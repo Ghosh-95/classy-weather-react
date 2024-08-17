@@ -50,9 +50,15 @@ input {
   color: inherit;
   font-size: 2rem;
   background-color: #f0d2ce;
-  padding: 1.6rem 3.2rem;
+  padding: 0.7rem 1.2rem;
   border: none;
   width: 32rem;
+  margin-right: 0.5rem;
+}
+
+form button {
+  padding: 1.01rem 1.2rem;
+  font-family: inherit;
 }
 
 input:focus {
